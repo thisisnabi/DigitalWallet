@@ -67,4 +67,34 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
 
         return wallet;
     }
+
+    internal async Task<bool> IsWalletAvailableAsync(Guid walletId, CancellationToken ct)
+    {
+        var wallet = await FetchWalletAsync(walletId, ct);
+
+        return wallet.Status == WalletStatus.Active;
+
+
+    }
+
+    internal async Task IncrementWalletBalanceAsync(Guid walletId, decimal amount, CancellationToken ct)
+    {
+        var wallet = await FetchWalletAsync(walletId, ct);
+
+        wallet.Balance += amount;
+        await _dbContext.SaveChangesAsync(ct);
+    }
+
+    internal async Task DecrementWalletBalanceAsync(Guid walletId, decimal amount, CancellationToken ct)
+    {
+        var wallet = await FetchWalletAsync(walletId, ct);
+
+        if ((wallet.Balance - amount) < 0)
+        {
+            throw new Exception("Wallet balance is not valid.");
+        }
+
+        wallet.Balance -= amount;
+        await _dbContext.SaveChangesAsync(ct);
+    }
 }

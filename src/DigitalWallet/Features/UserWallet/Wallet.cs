@@ -1,4 +1,5 @@
 ﻿using DigitalWallet.Features.MultiCurrency;
+using DigitalWallet.Features.Transactions;
 
 namespace DigitalWallet.Features.UserWallet;
 
@@ -19,6 +20,8 @@ public class Wallet
     public Currency Currency { get; set; } = null!;
 
     public WalletStatus Status { get; set; }
+
+    public ICollection<Transaction> Transactions { get; set; }
 }
 
 
