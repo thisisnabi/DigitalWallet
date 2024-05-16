@@ -1,5 +1,3 @@
-using DigitalWallet.Features.MultiCurrency.Create;
-using DigitalWallet.Features.MultiCurrency.UpdateRation;
 using DigitalWallet.Features.Transactions.DecrementWalletBalance;
 using DigitalWallet.Features.Transactions.IncrementWalletBalance;
 using DigitalWallet.Features.Transactions.WalletFunds;
