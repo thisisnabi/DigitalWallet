@@ -1,7 +1,4 @@
-﻿using DigitalWallet.Features.MultiCurrency.Create;
-using DigitalWallet.Features.MultiCurrency.UpdateRation;
-
-namespace DigitalWallet.Features.MultiCurrency;
+﻿namespace DigitalWallet.Features.MultiCurrency;
 
 public static class FeatureManager
 {

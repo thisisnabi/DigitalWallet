@@ -15,3 +15,5 @@ global using DigitalWallet.Features.UserWallet;
 global using DigitalWallet.Common.Persistence;
 global using DigitalWallet.Features.MultiCurrency.Common;
 global using DigitalWallet.Common.Filters;
+global using DigitalWallet.Features.MultiCurrency.Create;
+global using DigitalWallet.Features.MultiCurrency.UpdateRation;
