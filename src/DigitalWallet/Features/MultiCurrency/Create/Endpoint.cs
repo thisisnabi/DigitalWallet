@@ -8,8 +8,7 @@ public static class Endpoint
 
     public static IEndpointRouteBuilder AddCreateCurrencyEndPoint(this IEndpointRouteBuilder endpoint)
     {
-        endpoint.MapPost("/Currency", async (CreateCurrencyRequest request,
-            WalletDbContext dbContext, CancellationToken ct, CurrencyService _service) =>
+        endpoint.MapPost("/Currency", async (CreateCurrencyRequest request, CancellationToken ct, CurrencyService _service) =>
         {
             // TODO: Check data validation vy fluen validation
             // TODO: Use mapster for mapping

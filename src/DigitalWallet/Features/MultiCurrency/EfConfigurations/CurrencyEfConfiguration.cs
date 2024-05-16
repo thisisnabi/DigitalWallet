@@ -31,5 +31,9 @@ public class CurrencyEfConfiguration : IEntityTypeConfiguration<Currency>
 
         builder.Property(x => x.LatestModifiedOnUtc)
                .HasDefaultValueSql("GETDATE()");
+
+        builder.HasMany(x => x.Wallets)
+               .WithOne(z => z.Currency)
+               .HasForeignKey(z => z.CurrencyId);
     }
 }

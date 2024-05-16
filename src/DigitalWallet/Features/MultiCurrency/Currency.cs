@@ -1,4 +1,6 @@
-﻿namespace DigitalWallet.Features.MultiCurrency;
+﻿using DigitalWallet.Features.UserWallet;
+
+namespace DigitalWallet.Features.MultiCurrency;
 
 public class Currency
 {
@@ -14,7 +16,8 @@ public class Currency
 
     public DateTime LatestModifiedOnUtc { get; set; }
 
-    
+    public ICollection<Wallet> Wallets { get; set; }
+
     public void UpdateRation(decimal ration)
     {
         if (IsBased)

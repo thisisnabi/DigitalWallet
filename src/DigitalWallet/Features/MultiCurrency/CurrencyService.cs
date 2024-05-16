@@ -56,4 +56,8 @@ public class CurrencyService(WalletDbContext dbContext)
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<bool> HasByIdAsync(int currencyId, CancellationToken ct)
+    {
+        return await _dbContext.Currencies.AnyAsync(x => x.Id == currencyId, ct);
+    }
 }

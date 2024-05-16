@@ -1,5 +1,5 @@
 ﻿using DigitalWallet.Features.MultiCurrency;
-using DigitalWallet.Features.UserWallet.Domain;
+using DigitalWallet.Features.UserWallet;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalWallet.Common.Persistence;
@@ -12,6 +12,7 @@ public class WalletDbContext : DbContext
 
     }
 
+    public DbSet<Wallet> Wallets => Set<Wallet>();
     public DbSet<Currency> Currencies => Set<Currency>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
