@@ -1,4 +1,4 @@
-﻿namespace DigitalWallet.Features.MultiCurrency.Create;
+﻿namespace DigitalWallet.Features.MultiCurrency.CreateCurrency;
 
 public class CreateCurrencyRequestValidator : AbstractValidator<CreateCurrencyRequest>
 {
