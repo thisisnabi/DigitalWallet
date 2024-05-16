@@ -47,7 +47,7 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
         wallet.Status = WalletStatus.Suspend;
         await _dbContext.SaveChangesAsync(ct);
     }
-     
+
     internal async Task ChangeTitleAsync(Guid id, string title, CancellationToken ct)
     {
         var wallet = await FetchWalletAsync(id, ct);
@@ -58,7 +58,7 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
 
     private async Task<Wallet> FetchWalletAsync(Guid Id, CancellationToken ct)
     {
-        var wallet = await _dbContext.Wallets.FirstOrDefaultAsync(x => x.Id == Id, ct);
+        var wallet = await _dbContext.Wallets.Include(x => x.Currency).FirstOrDefaultAsync(x => x.Id == Id, ct);
 
         if (wallet is null)
         {
@@ -97,4 +97,30 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
         wallet.Balance -= amount;
         await _dbContext.SaveChangesAsync(ct);
     }
+
+    internal async Task<bool> IsUserOwnedAsync(List<Guid> WalletIds, CancellationToken ct)
+    {
+        var wallets = await _dbContext.Wallets.Where(x => WalletIds.Contains(x.Id))
+                                              .ToListAsync(ct);
+
+        return wallets.Select(x => x.UserId).Distinct().Count() == 1;
+    }
+
+    internal async Task<decimal> WalletFundsAsync(Guid sourceWalletId, Guid destinationWalletId, decimal amount, CancellationToken ct)
+    {
+        var walletSource = await FetchWalletAsync(sourceWalletId, ct);
+        var walletDestination = await FetchWalletAsync(destinationWalletId, ct);
+
+        walletSource.Balance -= amount;
+
+        var destinationAmount = (walletSource.Currency.RationToBase / walletDestination.Currency.RationToBase) * amount;
+        walletDestination.Balance += destinationAmount;
+
+        await _dbContext.SaveChangesAsync(ct);
+
+        return destinationAmount;
+    }
+
+
+
 }

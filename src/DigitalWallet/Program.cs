@@ -5,6 +5,7 @@ using DigitalWallet.Features.MultiCurrency.UpdateRation;
 using DigitalWallet.Features.Transactions;
 using DigitalWallet.Features.Transactions.DecrementWalletBalance;
 using DigitalWallet.Features.Transactions.IncrementWalletBalance;
+using DigitalWallet.Features.Transactions.WalletFunds;
 using DigitalWallet.Features.Transactions.WalletTransactions;
 using DigitalWallet.Features.UserWallet;
 using DigitalWallet.Features.UserWallet.ChangeTitle;
@@ -44,5 +45,6 @@ app.AddSuspendWalletEndPoint();
 app.AddIncrementWalletBalanceEndPoint();
 app.AddDecrementWalletBalanceEndPoint();
 app.AddGetWalletTransactionsEndPoint();
+app.AddWalletFundsEndPoint();
 
 app.Run();
