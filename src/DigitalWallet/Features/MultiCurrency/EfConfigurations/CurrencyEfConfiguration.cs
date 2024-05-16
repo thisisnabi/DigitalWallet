@@ -1,8 +1,4 @@
-﻿using DigitalWallet.Common.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace DigitalWallet.Features.MultiCurrency.EfConfigurations;
+﻿namespace DigitalWallet.Features.MultiCurrency.EfConfigurations;
 
 public class CurrencyEfConfiguration : IEntityTypeConfiguration<Currency>
 {
@@ -25,15 +21,11 @@ public class CurrencyEfConfiguration : IEntityTypeConfiguration<Currency>
                .IsUnicode(true)
                .HasMaxLength(25);
 
-        builder.Property(x => x.RationToBase)
+        builder.Property(x => x.Ratio)
                .IsRequired(true)
-               .HasColumnType("decimal(18,6)");
+               .HasColumnType(WalletDbContextSchema.DefaultAmountColumnType);
 
-        builder.Property(x => x.LatestModifiedOnUtc)
-               .HasDefaultValueSql("GETDATE()");
-
-        builder.HasMany(x => x.Wallets)
-               .WithOne(z => z.Currency)
-               .HasForeignKey(z => z.CurrencyId);
+        builder.Property(x => x.ModifiedOnUtc)
+               .IsRequired(true);
     }
 }

@@ -1,31 +1,20 @@
-﻿using DigitalWallet.Features.UserWallet;
-
-namespace DigitalWallet.Features.MultiCurrency;
+﻿namespace DigitalWallet.Features.MultiCurrency;
 
 public class Currency
 {
-    public int Id { get; set; }
+    public CurrencyId Id { get; set; } = null!;
 
     public string Code { get; set; } = null!;
 
     public string Name { get; set; } = null!;
+ 
+    public decimal Ratio { get; set; }
 
-    public bool IsBased { get; set; }
-
-    public decimal RationToBase { get; set; }
-
-    public DateTime LatestModifiedOnUtc { get; set; }
-
-    public ICollection<Wallet> Wallets { get; set; }
-
-    public void UpdateRation(decimal ration)
+    public DateTime ModifiedOnUtc { get; set; }
+ 
+    public void UpdateRation(decimal ratio)
     {
-        if (IsBased)
-        {
-            throw new InvalidOperationException("Can't update ration for base.");
-        }
-
-        RationToBase = ration;
-        LatestModifiedOnUtc = DateTime.UtcNow;  
+        Ratio = ratio;
+        ModifiedOnUtc = DateTime.UtcNow;
     }
 }

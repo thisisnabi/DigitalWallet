@@ -2,12 +2,6 @@
 
 public class CurrencyConvertor
 {
-
-    public decimal Convert(Currency sourceCurrency, Currency destinaitonCurrency, decimal amount)
-    {
-
-
-
-        return decimal.Zero;
-    }
+    public decimal Convert(Currency sourceCurrency, Currency destinaitonCurrency, decimal amount) 
+        => (sourceCurrency.Ratio / destinaitonCurrency.Ratio) * amount;
 }
