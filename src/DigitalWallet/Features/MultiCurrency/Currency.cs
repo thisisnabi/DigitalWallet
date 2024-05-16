@@ -7,11 +7,21 @@ public class Currency
     public string Code { get; set; } = null!;
 
     public string Name { get; set; } = null!;
- 
+
     public decimal Ratio { get; set; }
 
     public DateTime ModifiedOnUtc { get; set; }
- 
+
+    public static Currency Create(string code, string name, decimal ratio)
+        => new Currency
+        {
+            Id = CurrencyId.CreateUniqueId(),
+            Ratio = ratio,
+            Code = code,
+            Name = name,
+            ModifiedOnUtc = DateTime.UtcNow
+        };
+
     public void UpdateRation(decimal ratio)
     {
         Ratio = ratio;

@@ -1,7 +1,4 @@
-﻿using DigitalWallet.Common.Persistence;
-using DigitalWallet.Features.MultiCurrency;
-using DigitalWallet.Features.UserWallet.DTOs;
-using Microsoft.EntityFrameworkCore;
+﻿using DigitalWallet.Features.UserWallet.DTOs;
 
 namespace DigitalWallet.Features.UserWallet;
 
@@ -13,7 +10,7 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
 
     internal async Task<Guid> CreateAsync(CreateUserWallet data, CancellationToken ct)
     {
-        if (!await _currencyService.HasByIdAsync(data.CurrencyId, ct))
+        if (!await _currencyService.IsCurrencyIdValidAsync(null, ct))
         {
             throw new Exception($"Currency with id {data.CurrencyId} is not available!");
         }
@@ -113,7 +110,7 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
 
         walletSource.Balance -= amount;
 
-        var destinationAmount = (walletSource.Currency.RationToBase / walletDestination.Currency.RationToBase) * amount;
+        var destinationAmount = (walletSource.Currency.Ratio / walletDestination.Currency.Ratio) * amount;
         walletDestination.Balance += destinationAmount;
 
         await _dbContext.SaveChangesAsync(ct);

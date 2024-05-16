@@ -1,3 +1,3 @@
 ﻿namespace DigitalWallet.Features.MultiCurrency.UpdateRation;
 
-public record UpdateRationRequest(decimal Ration);
+public record UpdateRationRequest(decimal Ratio);

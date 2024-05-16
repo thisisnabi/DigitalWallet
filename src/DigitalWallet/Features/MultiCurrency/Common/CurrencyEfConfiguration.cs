@@ -1,4 +1,4 @@
-﻿namespace DigitalWallet.Features.MultiCurrency.EfConfigurations;
+﻿namespace DigitalWallet.Features.MultiCurrency.Common;
 
 public class CurrencyEfConfiguration : IEntityTypeConfiguration<Currency>
 {
@@ -8,22 +8,28 @@ public class CurrencyEfConfiguration : IEntityTypeConfiguration<Currency>
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+               .ValueGeneratedNever()
+               .HasConversion(id => id.Value,
+                              value => CurrencyId.Create(value));
+
+
         builder.Property(x => x.Code)
                .IsRequired(true)
                .IsUnicode(false)
                .HasMaxLength(10);
 
         builder.HasIndex(x => x.Code)
-               .IsUnique();
+               .IsUnique(true);
 
         builder.Property(x => x.Name)
                .IsRequired(true)
                .IsUnicode(true)
-               .HasMaxLength(25);
+               .HasMaxLength(30);
 
         builder.Property(x => x.Ratio)
                .IsRequired(true)
-               .HasColumnType(WalletDbContextSchema.DefaultAmountColumnType);
+               .HasColumnType(WalletDbContextSchema.DefaultDecimalColumnType);
 
         builder.Property(x => x.ModifiedOnUtc)
                .IsRequired(true);
