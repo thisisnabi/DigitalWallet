@@ -1,13 +1,10 @@
-﻿using DigitalWallet.Features.MultiCurrency;
-using DigitalWallet.Features.Transactions;
-
-namespace DigitalWallet.Features.UserWallet;
+﻿namespace DigitalWallet.Features.UserWallet;
 
 public class Wallet
 {
-    public Guid Id { get; set; }
+    public WalletId Id { get; set; } = null!;
 
-    public Guid UserId { get; set; }
+    public UserId UserId { get; set; } = null!;
 
     public string Title { get; set; } = null!;
 
@@ -15,13 +12,26 @@ public class Wallet
 
     public DateTime CreatedOn { get; set; }
 
-    public int CurrencyId { get; set; }
+    public CurrencyId CurrencyId { get; set; } = null!;
 
     public Currency Currency { get; set; } = null!;
 
     public WalletStatus Status { get; set; }
 
     public ICollection<Transaction> Transactions { get; set; }
+
+    public static Wallet Create(UserId userId, CurrencyId currencyId, string title)
+    {
+        return new Wallet
+        {
+            UserId = userId,
+            CurrencyId = currencyId,
+            Title = title,
+            Balance = 0,
+            CreatedOn = DateTime.UtcNow,
+            Status = WalletStatus.Active
+        };
+    }
 }
 
 

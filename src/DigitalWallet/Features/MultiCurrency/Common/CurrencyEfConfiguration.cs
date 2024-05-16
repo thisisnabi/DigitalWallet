@@ -33,5 +33,9 @@ public class CurrencyEfConfiguration : IEntityTypeConfiguration<Currency>
 
         builder.Property(x => x.ModifiedOnUtc)
                .IsRequired(true);
+
+        builder.HasMany(x => x.Wallets)
+               .WithOne(x => x.Currency)
+               .HasForeignKey(x => x.CurrencyId);
     }
 }

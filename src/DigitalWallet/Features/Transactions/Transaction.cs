@@ -6,7 +6,7 @@ public class Transaction
 {
     public Guid Id { get; set; }
 
-    public Guid WalletId { get; set; }
+    public WalletId WalletId { get; set; } = null!;
     public Wallet Wallet { get; set; }
 
     public string Description { get; set; }

@@ -12,6 +12,8 @@ public class Currency
 
     public DateTime ModifiedOnUtc { get; set; }
 
+    public ICollection<Wallet> Wallets { get; set; }
+
     public static Currency Create(string code, string name, decimal ratio)
         => new Currency
         {

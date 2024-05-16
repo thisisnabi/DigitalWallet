@@ -15,7 +15,7 @@ public static class FeatureManager
 
     public static IEndpointRouteBuilder MapCurrencyFeatures(this IEndpointRouteBuilder endpoint)
     {
-        var groupEndpoint = endpoint.MapGroup("/Currency")
+        var groupEndpoint = endpoint.MapGroup("/currencies")
                                     .WithTags(EndpointTagName)
                                     .WithDescription("Provides endpoints related to currency management.");
 

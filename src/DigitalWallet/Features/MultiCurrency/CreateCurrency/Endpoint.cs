@@ -1,6 +1,4 @@
-﻿
- 
-namespace DigitalWallet.Features.MultiCurrency.Create;
+﻿namespace DigitalWallet.Features.MultiCurrency.CreateCurrency;
 
 public static class Endpoint
 {
@@ -11,8 +9,7 @@ public static class Endpoint
             {
                 var currencyId = await _service.CreateAsync(request.Code, request.Name, request.Ration, cancellationToken);
                 return new CreateCurrencyResponse(currencyId.ToString());
-            }).Validator<CreateCurrencyRequestValidator>()
-              .WithTags(FeatureManager.EndpointTagName);
+            }).Validator<CreateCurrencyRequestValidator>();
 
         return endpoint;
     }

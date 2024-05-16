@@ -1,10 +1,4 @@
-﻿
-using DigitalWallet.Common.Persistence;
-using DigitalWallet.Features.UserWallet;
-using static DigitalWallet.Common.Persistence.WalletDbContextSchema;
-using System.Data.Common;
-
-namespace DigitalWallet.Features.Transactions;
+﻿namespace DigitalWallet.Features.Transactions;
 
 public class TransactionService(
     WalletService walletService,
@@ -13,7 +7,7 @@ public class TransactionService(
     private readonly WalletService _walletService = walletService;
     private readonly WalletDbContext _dbContext = dbContext;
 
-    internal async Task DecrementBalanceAsync(Guid walletId, decimal amount, string description, CancellationToken ct)
+    internal async Task IncrementBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
     {
         if (!await _walletService.IsWalletAvailableAsync(walletId, ct))
         {
@@ -29,46 +23,7 @@ public class TransactionService(
 
         try
         {
-            await _walletService.DecrementWalletBalanceAsync(walletId, amount, ct);
-
-            var transaction = new Transaction
-            {
-                WalletId = walletId,
-                Amount = amount,
-                Kind = TransactionKind.Decremental,
-                Type = TransactionType.User,
-                Description = description,
-                CreatedOn = DateTime.UtcNow,
-            };
-
-            await _dbContext.Transactions.AddAsync(transaction, ct);
-            await _dbContext.SaveChangesAsync(ct);
-
-            await dbTransaction.CommitAsync(ct);
-        }
-        catch (Exception)
-        {
-            await dbTransaction.RollbackAsync(ct);
-        }
-    }
-
-    internal async Task IncrementBalanceAsync(Guid walletId, decimal amount, string description, CancellationToken ct)
-    {
-        if (!await _walletService.IsWalletAvailableAsync(walletId, ct))
-        {
-            throw new Exception($"Wallet `{walletId}` currently is not avialiablke.");
-        }
-
-        if (amount == 0)
-        {
-            throw new Exception($"you can't make a zero++ transaction.");
-        }
-
-        var dbTransaction = await _dbContext.Database.BeginTransactionAsync(ct);
-
-        try
-        {
-            await _walletService.IncrementWalletBalanceAsync(walletId, amount, ct);
+            await _walletService.IncreaseBalanceAsync(walletId, amount, ct);
 
             var transaction = new Transaction
             {
@@ -91,18 +46,58 @@ public class TransactionService(
         }
     }
 
-    internal async Task WalletFundsAsync(Guid sourceWalletId, Guid destinationWalletId, decimal amount, string description, CancellationToken ct)
+
+    internal async Task DecrementBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
+    {
+        if (!await _walletService.IsWalletAvailableAsync(walletId, ct))
+        {
+            throw new Exception($"Wallet `{walletId}` currently is not avialiablke.");
+        }
+
+        if (amount == 0)
+        {
+            throw new Exception($"you can't make a zero++ transaction.");
+        }
+
+        var dbTransaction = await _dbContext.Database.BeginTransactionAsync(ct);
+
+        try
+        {
+            await _walletService.DecreaseBalanceAsync(walletId, amount, ct);
+
+            var transaction = new Transaction
+            {
+                WalletId = walletId,
+                Amount = amount,
+                Kind = TransactionKind.Decremental,
+                Type = TransactionType.User,
+                Description = description,
+                CreatedOn = DateTime.UtcNow,
+            };
+
+            await _dbContext.Transactions.AddAsync(transaction, ct);
+            await _dbContext.SaveChangesAsync(ct);
+
+            await dbTransaction.CommitAsync(ct);
+        }
+        catch (Exception)
+        {
+            await dbTransaction.RollbackAsync(ct);
+        }
+    }
+
+    internal async Task WalletFundsAsync(WalletId sourceWalletId, WalletId destinationWalletId, decimal amount, string description, CancellationToken ct)
     {
         if (!await _walletService.IsWalletAvailableAsync(sourceWalletId, ct))
         {
             throw new Exception($"Wallet `{sourceWalletId}` currently is not avialiablke.");
         }
-         
+
         if (!await _walletService.IsWalletAvailableAsync(destinationWalletId, ct))
         {
             throw new Exception($"Wallet `{destinationWalletId}` currently is not avialiablke.");
         }
-         
+
         if (amount == 0)
         {
             throw new Exception($"you can't make a zero++ transaction.");
@@ -117,7 +112,7 @@ public class TransactionService(
 
         try
         {
-            var destinationAmount =  await _walletService.WalletFundsAsync(sourceWalletId, destinationWalletId, amount, ct);
+            var destinationAmount = await _walletService.WalletFundsAsync(sourceWalletId, destinationWalletId, amount, ct);
             var date = DateTime.UtcNow;
 
             var transactionIncrement = new Transaction
