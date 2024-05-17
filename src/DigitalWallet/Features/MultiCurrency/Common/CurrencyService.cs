@@ -18,7 +18,7 @@ public class CurrencyService(WalletDbContext dbContext)
 
         var currency = Currency.Create(code, name, ratio);
 
-        await _dbContext.Currencies.AddAsync(currency, cancellationToken);
+        _dbContext.Currencies.Add(currency);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return currency.Id;
