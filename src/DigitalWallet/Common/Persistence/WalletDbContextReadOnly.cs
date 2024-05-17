@@ -2,7 +2,7 @@
 
 public class WalletDbContextReadOnly : DbContext
 {
-    public WalletDbContextReadOnly(DbContextOptions<WalletDbContext> dbContextOptions) : base(dbContextOptions)
+    public WalletDbContextReadOnly(DbContextOptions<WalletDbContextReadOnly> dbContextOptions) : base(dbContextOptions)
     {
 
     }

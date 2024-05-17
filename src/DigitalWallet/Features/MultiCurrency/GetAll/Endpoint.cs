@@ -11,6 +11,7 @@ public static class Endpoint
                                                    .OrderByDescending(x => x.Name)
                                                    .Select(x => new
                                                    {
+                                                       Id = x.Id.ToString(),
                                                        x.Name,
                                                        x.Code,
                                                        x.Ratio
