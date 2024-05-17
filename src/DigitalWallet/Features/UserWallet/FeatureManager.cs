@@ -1,4 +1,6 @@
-﻿namespace DigitalWallet.Features.UserWallet;
+﻿using DigitalWallet.Features.UserWallet.GetTransactions;
+
+namespace DigitalWallet.Features.UserWallet;
 
 public static class FeatureManager
 {
@@ -21,6 +23,7 @@ public static class FeatureManager
         groupEndpoint.AddCreateWalletEndpoint();
         groupEndpoint.AddChangeTitleEndpoint();
         groupEndpoint.AddSuspendWalletEndpoint();
+        groupEndpoint.AddGetTransactionsEndpoint();
 
         return endpoint;
     }

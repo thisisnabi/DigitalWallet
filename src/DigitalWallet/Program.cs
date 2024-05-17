@@ -1,21 +1,14 @@
-using DigitalWallet.Features.Transactions.DecrementWalletBalance;
-using DigitalWallet.Features.Transactions.IncrementWalletBalance;
-using DigitalWallet.Features.Transactions.WalletFunds;
-using DigitalWallet.Features.Transactions.WalletTransactions;
+using DigitalWallet.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<WalletDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString(WalletDbContextSchema.DefaultConnectionStringName));
-});
-
+builder.Services.ConfigureDbContexts(builder.Configuration);
+ 
 builder.Services.ConfigureMultiCurrencyFeature();
 builder.Services.ConfigureWalletFeature();
-
 
 
 builder.Services.AddScoped<TransactionService>();
@@ -39,3 +32,4 @@ app.AddGetWalletTransactionsEndPoint();
 app.AddWalletFundsEndPoint();
 
 app.Run();
+ 
