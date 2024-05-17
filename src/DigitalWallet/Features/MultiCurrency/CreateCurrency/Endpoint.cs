@@ -2,7 +2,7 @@
 
 public static class Endpoint
 {
-    public static IEndpointRouteBuilder MapCreateCurrencyEndpoint(this IEndpointRouteBuilder endpoint)
+    public static IEndpointRouteBuilder AddCreateCurrencyEndpoint(this IEndpointRouteBuilder endpoint)
     {
         endpoint.MapPost("/",
             async (CreateCurrencyRequest request, CurrencyService _service, CancellationToken cancellationToken) =>

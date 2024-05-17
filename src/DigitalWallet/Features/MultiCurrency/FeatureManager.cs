@@ -19,7 +19,7 @@ public static class FeatureManager
                                     .WithTags(EndpointTagName)
                                     .WithDescription("Provides endpoints related to currency management.");
 
-        groupEndpoint.MapCreateCurrencyEndpoint();
+        groupEndpoint.AddCreateCurrencyEndpoint();
         groupEndpoint.AddUpdateRatioEndpoint();
 
         return endpoint;

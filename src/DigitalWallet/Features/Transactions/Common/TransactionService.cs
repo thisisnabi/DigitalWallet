@@ -7,7 +7,7 @@ public class TransactionService(
     private readonly WalletService _walletService = walletService;
     private readonly WalletDbContext _dbContext = dbContext;
 
-    internal async Task IncrementBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
+    internal async Task IncreaseBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
     {
         if (!await _walletService.IsWalletAvailableAsync(walletId, ct))
         {
