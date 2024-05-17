@@ -1,6 +1,4 @@
-﻿using DigitalWallet.Features.UserWallet.GetTransactions;
-
-namespace DigitalWallet.Features.UserWallet;
+﻿namespace DigitalWallet.Features.UserWallet;
 
 public static class FeatureManager
 {

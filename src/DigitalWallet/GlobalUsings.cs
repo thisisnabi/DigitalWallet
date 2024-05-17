@@ -25,3 +25,5 @@ global using DigitalWallet.Features.Transactions.DecrementWalletBalance;
 global using DigitalWallet.Features.Transactions.IncrementWalletBalance;
 global using DigitalWallet.Features.Transactions.WalletFunds;
 global using DigitalWallet.Features.Transactions.WalletTransactions;
+global using DigitalWallet.Features.UserWallet.GetTransactions;
+global using DigitalWallet.Features.Transactions.Common;

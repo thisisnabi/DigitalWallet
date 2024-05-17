@@ -1,4 +1,4 @@
-﻿namespace DigitalWallet.Features.Transactions;
+﻿namespace DigitalWallet.Features.Transactions.Common;
 
 public class TransactionService(
     WalletService walletService,

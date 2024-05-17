@@ -1,15 +1,14 @@
-﻿using DigitalWallet.Features.UserWallet;
-
-namespace DigitalWallet.Features.Transactions;
+﻿namespace DigitalWallet.Features.Transactions.Common;
 
 public class Transaction
 {
-    public Guid Id { get; set; }
+    public TransactionId Id { get; set; } = null!;
 
     public WalletId WalletId { get; set; } = null!;
-    public Wallet Wallet { get; set; }
 
-    public string Description { get; set; }
+    public Wallet Wallet { get; set; } = null!;
+
+    public required string Description { get; set; }
 
     public decimal Amount { get; set; }
 

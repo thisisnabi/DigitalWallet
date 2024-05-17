@@ -1,9 +1,4 @@
-﻿using DigitalWallet.Common.Persistence;
-using DigitalWallet.Features.UserWallet;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace DigitalWallet.Features.Transactions.EfConfiguration;
+﻿namespace DigitalWallet.Features.Transactions.Common;
 
 public class TransactionEfConfiguration : IEntityTypeConfiguration<Transaction>
 {
@@ -13,21 +8,28 @@ public class TransactionEfConfiguration : IEntityTypeConfiguration<Transaction>
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+               .ValueGeneratedNever()
+               .HasConversion(id => id.Value,
+                              value => TransactionId.Create(value));
+
         builder.Property(x => x.WalletId)
-               .IsRequired();
+               .IsRequired(true)
+               .ValueGeneratedNever()
+               .HasConversion(id => id.Value,
+                              value => WalletId.Create(value));
 
         builder.Property(x => x.Description)
-               .IsRequired(false)
+               .IsRequired(true)
                .IsUnicode(true)
                .HasMaxLength(500);
 
         builder.Property(x => x.Amount)
                .IsRequired()
-               .HasColumnType("decimal(18,6)");
+               .HasColumnType(WalletDbContextSchema.DefaultDecimalColumnType);
 
         builder.Property(x => x.CreatedOn)
-                .IsRequired()
-                .HasDefaultValueSql("GETDATE()");
+                .IsRequired(true);
 
         builder.Property(x => x.Kind)
                .IsRequired(true);
