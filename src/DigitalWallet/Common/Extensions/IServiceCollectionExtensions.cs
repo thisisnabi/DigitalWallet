@@ -1,4 +1,6 @@
-﻿namespace DigitalWallet.Common.Extensions;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace DigitalWallet.Common.Extensions;
 
 public static class IServiceCollectionExtensions
 {
@@ -14,6 +16,15 @@ public static class IServiceCollectionExtensions
             options.UseSqlServer(configuration.GetConnectionString(WalletDbContextSchema.DefaultReadOnlyConnectionStringName))
                    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
+
+        return services;
+    }
+
+    public static IServiceCollection ConfigureValidator(this IServiceCollection services)
+    {
+        var assembly = typeof(IAssemblyMarker).Assembly;
+
+        services.AddValidatorsFromAssembly(assembly);
 
         return services;
     }

@@ -6,6 +6,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureDbContexts(builder.Configuration);
+builder.Services.ConfigureValidator();
  
 builder.Services.ConfigureMultiCurrencyFeature();
 builder.Services.ConfigureWalletFeature();
