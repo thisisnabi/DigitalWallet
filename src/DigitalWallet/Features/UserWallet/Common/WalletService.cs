@@ -37,22 +37,22 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
         }
 
         return wallet;
-    } 
+    }
 
-    internal async Task SuspendAsync(WalletId walletId, CancellationToken  cancellationToken)
+    internal async Task SuspendAsync(WalletId walletId, CancellationToken cancellationToken)
     {
         var wallet = await GetWalletAsync(walletId, cancellationToken);
 
-        wallet.Status = WalletStatus.Suspend;
+        wallet.Suspend();
+
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
-
 
     internal async Task ActiveAsync(WalletId walletId, CancellationToken cancellationToken)
     {
         var wallet = await GetWalletAsync(walletId, cancellationToken);
+        wallet.Activate();
 
-        wallet.Status = WalletStatus.Active;
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
@@ -60,10 +60,10 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
     {
         var wallet = await GetWalletAsync(walletId, cancellationToken);
 
-        wallet.Title = title;
+        wallet.UpdateTitle(title);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
-     
+
     internal async Task<bool> IsWalletAvailableAsync(WalletId walletId, CancellationToken cancellationToken)
     {
         var wallet = await GetWalletAsync(walletId, cancellationToken);
@@ -74,7 +74,7 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
     {
         var wallet = await GetWalletAsync(walletId, cancellationToken);
 
-        wallet.Balance += amount;
+        wallet.IncreaseBalance(amount);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
@@ -87,7 +87,7 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
             InsufficientBalanceException.Throw();
         }
 
-        wallet.Balance -= amount;
+        wallet.DecreaseBalance(amount);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
@@ -104,10 +104,10 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
         var walletSource = await GetWalletAsync(sourceWalletId, cancellationToken);
         var walletDestination = await GetWalletAsync(destinationWalletId, cancellationToken);
 
-        walletSource.Balance -= amount;
+        walletSource.DecreaseBalance(amount);
 
         var destinationAmount = walletSource.Currency.Ratio / walletDestination.Currency.Ratio * amount;
-        walletDestination.Balance += destinationAmount;
+        walletDestination.IncreaseBalance(destinationAmount);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
