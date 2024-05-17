@@ -1,23 +1,19 @@
-﻿using DigitalWallet.Features.UserWallet.Common;
-
-namespace DigitalWallet.Features.UserWallet.Suspend;
+﻿namespace DigitalWallet.Features.UserWallet.Suspend;
 
 public static class Endpoint
 {
 
     public static IEndpointRouteBuilder AddSuspendWalletEndpoint(this IEndpointRouteBuilder endpoint)
     {
-        endpoint.MapPatch("/wallets/{id:guid}/suspend", async (
-            [FromRoute(Name = "id")] Guid Id,
+        endpoint.MapPatch("/wallets/{wallet-id:guid:required}/suspend",
+            async ([FromRoute(Name = "wallet-id")] Guid Id,
             CancellationToken ct,
             WalletService _service) =>
         {
-            // TODO: Check data validation vy fluen validation
+            var walletId = WalletId.Create(Id);
+            await _service.SuspendAsync(walletId, ct);
 
-            await _service.SuspendAsync(Id, ct);
-
-            // TODO: Use mapster for mapping
-            return Results.Ok("Wallet suspended!");
+            return Results.Ok("Wallet suspended successfully!");
         }).WithTags("Wallet");
         return endpoint;
     }
