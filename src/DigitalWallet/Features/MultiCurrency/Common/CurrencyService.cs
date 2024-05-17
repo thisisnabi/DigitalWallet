@@ -37,7 +37,7 @@ public class CurrencyService(WalletDbContext dbContext)
             CurrencyNotFoundException.Throw(currencyId);
         }
 
-        currency.UpdateRation(ratio);
+        currency.UpdateRatio(ratio);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 

@@ -28,7 +28,7 @@ public class TransactionEfConfiguration : IEntityTypeConfiguration<Transaction>
                .IsRequired()
                .HasColumnType(WalletDbContextSchema.DefaultDecimalColumnType);
 
-        builder.Property(x => x.CreatedOn)
+        builder.Property(x => x.CreatedOnUtc)
                 .IsRequired(true);
 
         builder.Property(x => x.Kind)
