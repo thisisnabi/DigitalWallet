@@ -14,7 +14,7 @@ public class CreateCurrencyRequestValidator : AbstractValidator<CreateCurrencyRe
             .NotEmpty()
             .MaximumLength(10);
 
-        RuleFor(x => x.Ration)
+        RuleFor(x => x.Ratio)
             .GreaterThan(0);
     }
 }
