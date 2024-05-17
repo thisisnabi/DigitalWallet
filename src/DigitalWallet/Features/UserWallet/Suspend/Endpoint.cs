@@ -5,7 +5,7 @@ public static class Endpoint
 
     public static IEndpointRouteBuilder AddSuspendWalletEndpoint(this IEndpointRouteBuilder endpoint)
     {
-        endpoint.MapPatch("/wallets/{wallet-id:guid:required}/suspend",
+        endpoint.MapPatch("/{wallet-id:guid:required}/suspend",
             async ([FromRoute(Name = "wallet-id")] Guid Id,
             CancellationToken ct,
             WalletService _service) =>
