@@ -23,7 +23,7 @@ public static class FeatureManager
 
         groupEndpoint.AddIncreaseWalletBalanceEndPoint();
         groupEndpoint.AddDecreaseWalletBalanceEndPoint();
-        groupEndpoint.AddGetWalletTransactionsEndPoint();
+        groupEndpoint.AddGetOnRangeTransactionsEndPoint();
         groupEndpoint.AddWalletFundsEndPoint();
 
         return endpoint;

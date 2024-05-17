@@ -11,17 +11,19 @@ public static class Endpoint
 
             var walletId = WalletId.Create(Id);
 
-            var transactions = _dbContext.GetTransactions().Where(x => x.WalletId == walletId)
-                                                          .OrderByDescending(x => x.CreatedOn)
-                                                          .Select(x => new
-                                                          {
-                                                              CreatedOn = x.CreatedOn,
-                                                              Descripiton = x.Description,
-                                                              Type = x.Type,
-                                                              TypeName = x.Type.ToString(),
-                                                              Kind = x.Kind,
-                                                              KindName = x.Kind.ToString()
-                                                          });
+            var transactions = await _dbContext.GetTransactions()
+                                               .Where(x => x.WalletId == walletId)
+                                               .OrderByDescending(x => x.CreatedOn)
+                                               .Select(x => new
+                                               {
+                                                   CreatedOn = x.CreatedOn,
+                                                   Descripiton = x.Description,
+                                                   Type = x.Type,
+                                                   TypeName = x.Type.ToString(),
+                                                   Kind = x.Kind,
+                                                   KindName = x.Kind.ToString()
+                                               })
+                                               .ToListAsync(cancellationToken);
 
             return Results.Ok(transactions);
         });

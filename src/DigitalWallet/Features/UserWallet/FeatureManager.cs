@@ -22,6 +22,7 @@ public static class FeatureManager
         groupEndpoint.AddChangeTitleEndpoint();
         groupEndpoint.AddSuspendWalletEndpoint();
         groupEndpoint.AddGetTransactionsEndpoint();
+        groupEndpoint.AddGetBalanceEndpoint();
 
         return endpoint;
     }

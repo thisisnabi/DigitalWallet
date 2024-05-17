@@ -1,28 +1,20 @@
-﻿
-namespace DigitalWallet.Features.Transactions.WalletFunds;
+﻿namespace DigitalWallet.Features.Transactions.WalletFunds;
 
 public static class Endpoint
 {
 
     public static IEndpointRouteBuilder AddWalletFundsEndPoint(this IEndpointRouteBuilder endpoint)
     {
-        endpoint.MapPost("/transactions/funds", async (
-            WalletFundsRequest request,
-            CancellationToken ct,
-            TransactionService _service) =>
-        {
-            // TODO: Check data validation vy fluen validation
+        endpoint.MapPost("/funds",
+            async (WalletFundsRequest request, TransactionService _service, CancellationToken cancellationToken) =>
+            {
+                var swId = WalletId.Create(request.SourceWalletId);
+                var dwId = WalletId.Create(request.DestinationWalletId);
 
-            await _service.WalletFundsAsync(
-                request.SourceWalletId,
-                request.DestinationWalletId,
-                request.Amount,
-                request.Description,
-                ct);
+                await _service.WalletFundsAsync(swId, dwId, request.Amount, request.Description, cancellationToken);
 
-            // TODO: Use mapster for mapping
-            return Results.Ok("done!");
-        }).WithTags("Transaction");
+                return Results.Ok("Funds transferred successfully!");
+            }).Validator<WalletFundsRequestValidator>();
         return endpoint;
     }
 
