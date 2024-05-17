@@ -8,6 +8,8 @@ If you find this `DigitalWallet` valuable and believe in the importance of ASP.N
 
 This repository provides various resources to get you started with building your Digital Wallet application:
 
+![image](https://github.com/thisisnabi/DigitalWallet/assets/3371886/6cc50499-5130-4ec6-b976-8424a4ca5e04)
+
 ### Features
 - [x] MultiCurrency
   - [x] CreateCurrency
