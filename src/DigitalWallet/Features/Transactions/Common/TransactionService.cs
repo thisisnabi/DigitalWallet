@@ -47,7 +47,7 @@ public class TransactionService(
     }
 
 
-    internal async Task DecrementBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
+    internal async Task DecreaseBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
     {
         if (!await _walletService.IsWalletAvailableAsync(walletId, ct))
         {

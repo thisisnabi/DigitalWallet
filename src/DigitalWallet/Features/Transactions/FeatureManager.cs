@@ -1,4 +1,5 @@
-﻿using DigitalWallet.Features.Transactions.IncreaseWalletBalance;
+﻿using DigitalWallet.Features.Transactions.DecreaseWalletBalance;
+using DigitalWallet.Features.Transactions.IncreaseWalletBalance;
 
 namespace DigitalWallet.Features.Transactions;
 
@@ -21,7 +22,7 @@ public static class FeatureManager
                                     .WithDescription("Provides endpoints related to Transactions management.");
 
         groupEndpoint.AddIncreaseWalletBalanceEndPoint();
-        groupEndpoint.AddDecrementWalletBalanceEndPoint();
+        groupEndpoint.AddDecreaseWalletBalanceEndPoint();
         groupEndpoint.AddGetWalletTransactionsEndPoint();
         groupEndpoint.AddWalletFundsEndPoint();
 
