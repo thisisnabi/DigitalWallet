@@ -17,6 +17,7 @@ public class WalletDbContextReadOnly : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(assembly);
     }
 
-    public IQueryable<Transaction> GetTransactions() => 
-           Set<Transaction>().AsQueryable();
+    public IQueryable<Transaction> GetTransactions() => Set<Transaction>().AsQueryable();
+
+    public IQueryable<Wallet> GetWallets() => Set<Wallet>().AsQueryable();
 }
