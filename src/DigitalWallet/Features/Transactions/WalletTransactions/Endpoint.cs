@@ -9,8 +9,8 @@ public static class Endpoint
 
     public static IEndpointRouteBuilder AddGetOnRangeTransactionsEndPoint(this IEndpointRouteBuilder endpoint)
     {
-        endpoint.MapGet("/{wallet-id:guid}",
-            async ([FromRoute(Name = "wallet-id")]Guid Id, WalletTransactionsRequest requst,  WalletDbContextReadOnly _dbContext, CancellationToken cancellationToken) =>
+        endpoint.MapGet("/{wallet_id:guid:required}",
+            async ([FromRoute(Name = "wallet_id")]Guid Id, [AsParameters]WalletTransactionsRequest requst,  WalletDbContextReadOnly _dbContext, CancellationToken cancellationToken) =>
             {
                  
                 var fromDate = requst.FromDate == default ? DateTime.UtcNow.AddDays(-15) : requst.FromDate;

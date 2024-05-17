@@ -23,6 +23,7 @@ app.UseHttpsRedirection();
 
 app.MapCurrencyFeatures();
 app.MapWalletFeatures();
+app.MapTransactionFeatures();
 
 
 app.Run();
