@@ -1,4 +1,4 @@
-﻿namespace DigitalWallet.Features.UserWallet;
+﻿namespace DigitalWallet.Features.UserWallet.Common;
 
 public record UserId(Guid Value)
 {

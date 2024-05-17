@@ -10,10 +10,10 @@ global using FluentValidation;
 
 // solution
 global using DigitalWallet.Features.MultiCurrency;
+global using DigitalWallet.Features.MultiCurrency.Common;
 global using DigitalWallet.Features.Transactions;
 global using DigitalWallet.Features.UserWallet;
 global using DigitalWallet.Common.Persistence;
-global using DigitalWallet.Features.MultiCurrency.Common;
 global using DigitalWallet.Common.Filters;
 global using DigitalWallet.Features.MultiCurrency.CreateCurrency;
 global using DigitalWallet.Features.MultiCurrency.UpdateRatio;

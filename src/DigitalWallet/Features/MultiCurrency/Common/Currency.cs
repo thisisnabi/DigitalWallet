@@ -1,4 +1,4 @@
-﻿namespace DigitalWallet.Features.MultiCurrency;
+﻿namespace DigitalWallet.Features.MultiCurrency.Common;
 
 public class Currency
 {
