@@ -2,7 +2,6 @@
 
 public static class Endpoint
 {
-
     public static IEndpointRouteBuilder AddGetBalanceEndpoint(this IEndpointRouteBuilder endpoint)
     {
         endpoint.MapGet("/{wallet_id:guid:required}/balance/",
@@ -14,10 +13,10 @@ public static class Endpoint
                                          .FirstOrDefaultAsync(x => x.Id == walletId, cancellationToken);
 
             if (wallet is null) throw new WalletNotFoundException(walletId);
-              
+
             return Results.Ok(new
             {
-                WalletId = walletId,
+                WalletId = walletId.ToString(),
                 Balance = wallet.Balance
             });
         });

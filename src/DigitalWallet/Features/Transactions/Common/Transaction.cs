@@ -1,4 +1,6 @@
-﻿namespace DigitalWallet.Features.Transactions.Common;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace DigitalWallet.Features.Transactions.Common;
 
 public class Transaction
 {
@@ -17,4 +19,62 @@ public class Transaction
     public TransactionKind Kind { get; set; }
 
     public TransactionType Type { get; set; }
+
+
+    public  static Transaction CreateIncreaseUserTransaction(WalletId walletId, decimal amount, string description)
+    {
+       return new Transaction
+       {
+           Id = TransactionId.CreateUniqueId(),
+           WalletId = walletId,
+           Amount = amount,
+           Kind = TransactionKind.Incremental,
+           Type = TransactionType.User,
+           Description = description,
+           CreatedOn = DateTime.UtcNow,
+       };
+    }
+
+    public static Transaction CreateDecreaseUserTransaction(WalletId walletId, decimal amount, string description)
+    {
+        return new Transaction
+        {
+            Id = TransactionId.CreateUniqueId(),
+            WalletId = walletId,
+            Amount = amount,
+            Kind = TransactionKind.Decremental,
+            Type = TransactionType.User,
+            Description = description,
+            CreatedOn = DateTime.UtcNow,
+        };
+    }
+
+
+    public static Transaction CreateSourceFundsTransaction(WalletId sourceWalletId, decimal amount, string description, DateTime dateTime)
+    {
+        return new Transaction
+        {
+            Id = TransactionId.CreateUniqueId(),
+            WalletId = sourceWalletId,
+            Amount = amount,
+            Kind = TransactionKind.Decremental,
+            Type = TransactionType.Funds,
+            Description = description,
+            CreatedOn = dateTime,
+        };
+    }
+
+    public static Transaction CreateDestinationFundsTransaction(WalletId destinationWalletId, decimal amount, string description, DateTime dateTime)
+    {
+        return new Transaction
+        {
+            Id = TransactionId.CreateUniqueId(),
+            WalletId = destinationWalletId,
+            Amount = amount,
+            Kind = TransactionKind.Incremental,
+            Type = TransactionType.Funds,
+            Description = description,
+            CreatedOn = dateTime,
+        };
+    }
 }

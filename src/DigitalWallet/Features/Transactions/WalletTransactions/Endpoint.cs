@@ -1,4 +1,5 @@
-﻿using DigitalWallet.Common.Persistence;
+﻿using Azure.Core;
+using DigitalWallet.Common.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 
@@ -12,15 +13,11 @@ public static class Endpoint
         endpoint.MapGet("/{wallet_id:guid:required}",
             async ([FromRoute(Name = "wallet_id")]Guid Id, [AsParameters]WalletTransactionsRequest requst,  WalletDbContextReadOnly _dbContext, CancellationToken cancellationToken) =>
             {
-                 
-                var fromDate = requst.FromDate == default ? DateTime.UtcNow.AddDays(-15) : requst.FromDate;
-                var toDate = requst.ToDate == default ? DateTime.UtcNow : requst.ToDate;
-
                 var walletId = WalletId.Create(Id);
 
                 var transactions = await _dbContext.GetTransactions()
                                                    .Where(x => x.WalletId == walletId)
-                                                   .Where(x => x.CreatedOn >= fromDate && x.CreatedOn <= toDate)
+                                                   .Where(x => x.CreatedOn >= requst.FromDate && x.CreatedOn <= requst.ToDate)
                                                    .OrderByDescending(x => x.CreatedOn)
                                                    .Select(x => new
                                                    {
