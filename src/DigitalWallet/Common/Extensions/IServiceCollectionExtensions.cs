@@ -22,9 +22,7 @@ public static class IServiceCollectionExtensions
 
     public static IServiceCollection ConfigureValidator(this IServiceCollection services)
     {
-        var assembly = typeof(IAssemblyMarker).Assembly;
-
-        services.AddValidatorsFromAssembly(assembly);
+        services.AddValidatorsFromAssemblyContaining<IAssemblyMarker>();
 
         return services;
     }

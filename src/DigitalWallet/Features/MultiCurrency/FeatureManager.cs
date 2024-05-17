@@ -21,6 +21,7 @@ public static class FeatureManager
 
         groupEndpoint.AddCreateCurrencyEndpoint();
         groupEndpoint.AddUpdateRatioEndpoint();
+        groupEndpoint.AddGetAllEndpoint();
 
         return endpoint;
     }

@@ -20,4 +20,6 @@ public class WalletDbContextReadOnly : DbContext
     public IQueryable<Transaction> GetTransactions() => Set<Transaction>().AsQueryable();
 
     public IQueryable<Wallet> GetWallets() => Set<Wallet>().AsQueryable();
+
+    public IQueryable<Currency> GetCurrencies() => Set<Currency>().AsQueryable();
 }

@@ -11,7 +11,7 @@ public static class Endpoint
                 await _service.UpdateRationAsync(currencyId, request.Ratio, cancellationToken);
 
                 return Results.Ok("Currency ratio updated successfully!");
-            }).Validator<UpdateRatioRequestValidator>();
+            }).Validator<UpdateRatioRequest>();
 
         return endpoint;
     }

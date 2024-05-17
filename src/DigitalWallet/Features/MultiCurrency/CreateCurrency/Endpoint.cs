@@ -9,7 +9,7 @@ public static class Endpoint
             {
                 var currencyId = await _service.CreateAsync(request.Code, request.Name, request.Ratio, cancellationToken);
                 return new CreateCurrencyResponse(currencyId.ToString());
-            }).Validator<CreateCurrencyRequestValidator>();
+            }).Validator<CreateCurrencyRequest>();
 
         return endpoint;
     }
