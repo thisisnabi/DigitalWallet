@@ -5,8 +5,8 @@ public static class Endpoint
 
     public static IEndpointRouteBuilder AddIncreaseWalletBalanceEndPoint(this IEndpointRouteBuilder endpoint)
     {
-        endpoint.MapPost("/{wallet-id:guid:required}/increase", 
-            async ([FromRoute(Name = "wallet-id")]Guid Id,IncreaseWalletBalanceRequest request, TransactionService _service ,CancellationToken cancellationToken) =>
+        endpoint.MapPost("/{wallet_id:guid:required}/increase", 
+            async ([FromRoute(Name = "wallet_id")]Guid Id,[FromBody]IncreaseWalletBalanceRequest request, TransactionService _service ,CancellationToken cancellationToken) =>
             {
                 var walletId = WalletId.Create(Id);
                 await _service.IncreaseBalanceAsync(walletId, request.Amount, request.Description, cancellationToken);
