@@ -47,6 +47,15 @@ public class WalletService(CurrencyService currencyService, WalletDbContext dbCo
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+
+    internal async Task ActiveAsync(WalletId walletId, CancellationToken cancellationToken)
+    {
+        var wallet = await GetWalletAsync(walletId, cancellationToken);
+
+        wallet.Status = WalletStatus.Active;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     internal async Task ChangeTitleAsync(WalletId walletId, string title, CancellationToken cancellationToken)
     {
         var wallet = await GetWalletAsync(walletId, cancellationToken);

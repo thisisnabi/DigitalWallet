@@ -2,7 +2,7 @@
 
 public class WalletAlreadyExistsException : Exception
 {
-    private const string _message = "A wallet already exists for user {o} and currency {1}.";
+    private const string _message = "A wallet already exists for user {0} and currency {1}.";
 
     public WalletAlreadyExistsException(UserId userId,CurrencyId currencyId) : base(string.Format(_message, userId, currencyId))
     {

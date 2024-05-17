@@ -24,6 +24,7 @@ public class Wallet
     {
         return new Wallet
         {
+            Id = WalletId.CreateUniqueId(),
             UserId = userId,
             CurrencyId = currencyId,
             Title = title,

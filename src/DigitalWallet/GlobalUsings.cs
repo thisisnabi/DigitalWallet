@@ -27,3 +27,4 @@ global using DigitalWallet.Features.Transactions.WalletTransactions;
 global using DigitalWallet.Features.UserWallet.GetTransactions;
 global using DigitalWallet.Features.Transactions.Common;
 global using DigitalWallet.Features.MultiCurrency.GetAll;
+global using DigitalWallet.Features.UserWallet.Active;

@@ -23,6 +23,7 @@ public static class FeatureManager
         groupEndpoint.AddSuspendWalletEndpoint();
         groupEndpoint.AddGetTransactionsEndpoint();
         groupEndpoint.AddGetBalanceEndpoint();
+        groupEndpoint.AddActiveWalletEndpoint();
 
         return endpoint;
     }
