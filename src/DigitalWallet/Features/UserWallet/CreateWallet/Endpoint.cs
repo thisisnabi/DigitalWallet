@@ -1,10 +1,15 @@
-﻿namespace DigitalWallet.Features.UserWallet.CreateWallet;
+﻿using Carter;
 
-public static class Endpoint
+namespace DigitalWallet.Features.UserWallet.CreateWallet;
+
+public class Endpoint : ICarterModule
 {
-    public static IEndpointRouteBuilder AddCreateWalletEndpoint(this IEndpointRouteBuilder endpoint)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        endpoint.MapPost("/",
+        app
+            .MapGroup(FeatureManager.Prefix)
+            .WithTags(FeatureManager.EndpointTagName)
+            .MapPost("/",
             async ([FromBody] CreateWalletRequest request, WalletService _service, CancellationToken cancellationToken) =>
             {
                 var currencyId = CurrencyId.Create(request.CurrencyId);
@@ -15,6 +20,5 @@ public static class Endpoint
                 return new CreateWalletResponse(walletId.ToString());
             }).Validator<CreateWalletRequest>();
 
-        return endpoint;
     }
 }

@@ -1,18 +1,22 @@
-﻿namespace DigitalWallet.Features.MultiCurrency.UpdateRatio;
+﻿using Carter;
 
-public static class Endpoint
+namespace DigitalWallet.Features.MultiCurrency.UpdateRatio;
+
+public class Endpoint : ICarterModule
 {
-    public static IEndpointRouteBuilder AddUpdateRatioEndpoint(this IEndpointRouteBuilder endpoint)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        endpoint.MapPatch("/{currency_id:guid:required}",
-            async ([FromBody] UpdateRatioRequest request, [FromRoute(Name = "currency_id")] Guid Id, CurrencyService _service, CancellationToken cancellationToken) =>
+        app
+            .MapGroup(FeatureManager.Prefix)
+            .WithTags(FeatureManager.EndpointTagName)
+            .MapPatch("/{currency_id:guid:required}",
+            async ([FromBody] UpdateRatioRequest request, [FromRoute(Name = "currency_id")] Guid id,
+                CurrencyService service, CancellationToken cancellationToken) =>
             {
-                var currencyId = CurrencyId.Create(Id);
-                await _service.UpdateRationAsync(currencyId, request.Ratio, cancellationToken);
+                var currencyId = CurrencyId.Create(id);
+                await service.UpdateRationAsync(currencyId, request.Ratio, cancellationToken);
 
                 return Results.Ok("Currency ratio updated successfully!");
             }).Validator<UpdateRatioRequest>();
-
-        return endpoint;
     }
 }

@@ -1,3 +1,4 @@
+using Carter;
 using DigitalWallet.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,8 @@ builder.Services.ConfigureValidator();
 builder.Services.ConfigureMultiCurrencyFeature();
 builder.Services.ConfigureWalletFeature();
 builder.Services.ConfigureTransactionFeature();
-  
+builder.Services.AddCarter();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -21,11 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.MapCurrencyFeatures();
-app.MapWalletFeatures();
-app.MapTransactionFeatures();
-
+app.MapCarter();
 
 app.Run();
  
