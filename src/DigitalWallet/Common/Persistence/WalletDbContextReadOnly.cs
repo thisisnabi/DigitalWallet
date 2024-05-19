@@ -22,4 +22,14 @@ public class WalletDbContextReadOnly : DbContext
     public IQueryable<Wallet> GetWallets() => Set<Wallet>().AsQueryable();
 
     public IQueryable<Currency> GetCurrencies() => Set<Currency>().AsQueryable();
+
+    public override int SaveChanges()
+    {
+        throw new InvalidOperationException("This context is read-only.");
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        throw new InvalidOperationException("This context is read-only.");
+    }
 }
