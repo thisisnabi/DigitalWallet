@@ -25,7 +25,7 @@ public class TransactionService(
             await _walletService.IncreaseBalanceAsync(walletId, amount, ct);
 
             var transaction = Transaction.CreateIncreaseUserTransaction(walletId, amount, description);
-        
+
             _dbContext.Transactions.Add(transaction);
             await _dbContext.SaveChangesAsync(ct);
 
@@ -36,7 +36,6 @@ public class TransactionService(
             await dbTransaction.RollbackAsync(ct);
         }
     }
-
 
     internal async Task DecreaseBalanceAsync(WalletId walletId, decimal amount, string description, CancellationToken ct)
     {
@@ -76,11 +75,10 @@ public class TransactionService(
         if (!await _walletService.IsWalletAvailableAsync(destinationWalletId, ct))
         {
             WalletUnavailableException.Throw(destinationWalletId);
-
         }
 
         InvalidTransactionAmountException.Throw(amount);
-         
+
         if (!await _walletService.IsUserOwnedAsync([sourceWalletId, destinationWalletId], ct))
         {
             WalletOwnershipException.Throw();
@@ -91,6 +89,7 @@ public class TransactionService(
         try
         {
             var destinationAmount = await _walletService.WalletFundsAsync(sourceWalletId, destinationWalletId, amount, ct);
+
             var dateTime = DateTime.UtcNow;
 
             var transactionIncrement = Transaction.CreateDestinationFundsTransaction(
@@ -104,9 +103,9 @@ public class TransactionService(
                 amount,
                 description,
                 dateTime);
-      
-            _dbContext.Transactions.Add(transactionIncrement);
-            _dbContext.Transactions.Add(transactionDecrement);
+
+            _dbContext.Transactions.AddRange([transactionIncrement, transactionDecrement]);
+
             await _dbContext.SaveChangesAsync(ct);
 
             await dbTransaction.CommitAsync(ct);

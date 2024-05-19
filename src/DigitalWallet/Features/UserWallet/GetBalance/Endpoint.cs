@@ -7,12 +7,14 @@ public static class Endpoint
         endpoint.MapGet("/{wallet_id:guid:required}/balance/",
             async ([FromRoute(Name = "wallet_id")] Guid Id, WalletDbContextReadOnly _dbContext, CancellationToken cancellationToken) =>
         {
-
             var walletId = WalletId.Create(Id);
             var wallet = await _dbContext.GetWallets()
                                          .FirstOrDefaultAsync(x => x.Id == walletId, cancellationToken);
 
-            if (wallet is null) throw new WalletNotFoundException(walletId);
+            if (wallet is null)
+            {
+                throw new WalletNotFoundException(walletId);
+            }
 
             return Results.Ok(new
             {
@@ -23,5 +25,4 @@ public static class Endpoint
 
         return endpoint;
     }
-
 }

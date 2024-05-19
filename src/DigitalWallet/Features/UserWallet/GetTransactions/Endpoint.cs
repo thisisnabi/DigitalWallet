@@ -13,10 +13,10 @@ public static class Endpoint
 
             var transactions = await _dbContext.GetTransactions()
                                                .Where(x => x.WalletId == walletId)
-                                               .OrderByDescending(x => x.CreatedOn)
+                                               .OrderByDescending(x => x.CreatedOnUtc)
                                                .Select(x => new
                                                {
-                                                   CreatedOn = x.CreatedOn,
+                                                   CreatedOn = x.CreatedOnUtc,
                                                    Descripiton = x.Description,
                                                    Type = x.Type,
                                                    TypeName = x.Type.ToString(),

@@ -1,38 +1,35 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace DigitalWallet.Features.Transactions.Common;
+﻿namespace DigitalWallet.Features.Transactions.Common;
 
 public class Transaction
 {
-    public TransactionId Id { get; set; } = null!;
+    public TransactionId Id { get; private set; } = null!;
 
-    public WalletId WalletId { get; set; } = null!;
+    public WalletId WalletId { get; private set; } = null!;
 
-    public Wallet Wallet { get; set; } = null!;
+    public Wallet Wallet { get; private set; } = null!;
 
-    public required string Description { get; set; }
+    public string Description { get; private set; } = string.Empty;
 
-    public decimal Amount { get; set; }
+    public decimal Amount { get; private set; }
 
-    public DateTime CreatedOn { get; set; }
+    public DateTime CreatedOnUtc { get; private set; }
 
-    public TransactionKind Kind { get; set; }
+    public TransactionKind Kind { get; private set; }
 
-    public TransactionType Type { get; set; }
+    public TransactionType Type { get; private set; }
 
-
-    public  static Transaction CreateIncreaseUserTransaction(WalletId walletId, decimal amount, string description)
+    public static Transaction CreateIncreaseUserTransaction(WalletId walletId, decimal amount, string description)
     {
-       return new Transaction
-       {
-           Id = TransactionId.CreateUniqueId(),
-           WalletId = walletId,
-           Amount = amount,
-           Kind = TransactionKind.Incremental,
-           Type = TransactionType.User,
-           Description = description,
-           CreatedOn = DateTime.UtcNow,
-       };
+        return new Transaction
+        {
+            Id = TransactionId.CreateUniqueId(),
+            WalletId = walletId,
+            Amount = amount,
+            Kind = TransactionKind.Incremental,
+            Type = TransactionType.User,
+            Description = description,
+            CreatedOnUtc = DateTime.UtcNow,
+        };
     }
 
     public static Transaction CreateDecreaseUserTransaction(WalletId walletId, decimal amount, string description)
@@ -45,10 +42,9 @@ public class Transaction
             Kind = TransactionKind.Decremental,
             Type = TransactionType.User,
             Description = description,
-            CreatedOn = DateTime.UtcNow,
+            CreatedOnUtc = DateTime.UtcNow,
         };
     }
-
 
     public static Transaction CreateSourceFundsTransaction(WalletId sourceWalletId, decimal amount, string description, DateTime dateTime)
     {
@@ -60,7 +56,7 @@ public class Transaction
             Kind = TransactionKind.Decremental,
             Type = TransactionType.Funds,
             Description = description,
-            CreatedOn = dateTime,
+            CreatedOnUtc = dateTime,
         };
     }
 
@@ -74,7 +70,12 @@ public class Transaction
             Kind = TransactionKind.Incremental,
             Type = TransactionType.Funds,
             Description = description,
-            CreatedOn = dateTime,
+            CreatedOnUtc = dateTime,
         };
+    }
+
+    private Transaction()
+    {
+        //EF
     }
 }
