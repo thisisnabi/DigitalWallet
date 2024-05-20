@@ -13,7 +13,7 @@ public static class Endpoint
                 var walletId = await _service.CreateAsync(userId, currencyId, request.Title, cancellationToken);
 
                 return new CreateWalletResponse(walletId.ToString());
-            }).Validator<CreateWalletRequestValidator>();
+            }).Validator<CreateWalletRequest>();
 
         return endpoint;
     }
