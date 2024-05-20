@@ -12,7 +12,7 @@ public static class Endpoint
                 await _service.IncreaseBalanceAsync(walletId, request.Amount, request.Description, cancellationToken);
 
                 return Results.Ok("Wallet balance increased successfully!");
-        }).Validator<IncreaseWalletBalanceRequestValidator>();
+        }).Validator<IncreaseWalletBalanceRequest>();
         return endpoint;
     }
 
