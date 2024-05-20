@@ -12,7 +12,7 @@ public static class Endpoint
                 await _service.DecreaseBalanceAsync(walletId, request.Amount, request.Description, cancellationToken);
 
                 return Results.Ok("Wallet balance decreased successfully!");
-        }).Validator<DecreaseWalletBalanceRequestValidator>();
+        }).Validator<DecreaseWalletBalanceRequest>();
         return endpoint;
     }
 
