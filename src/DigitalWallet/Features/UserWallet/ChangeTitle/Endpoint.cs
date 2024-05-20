@@ -12,7 +12,7 @@ public static class Endpoint
                 await _service.ChangeTitleAsync(walletId, request.Title, cancellationToken);
 
                 return Results.Ok("Wallet title changed successfully!");
-            }).Validator<ChangeTitleRequestValidator>();
+            }).Validator<ChangeTitleRequest>();
 
         return endpoint;
     }
