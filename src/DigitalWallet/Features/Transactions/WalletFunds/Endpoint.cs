@@ -14,7 +14,7 @@ public static class Endpoint
                 await _service.WalletFundsAsync(swId, dwId, request.Amount, request.Description, cancellationToken);
 
                 return Results.Ok("Funds transferred successfully!");
-            }).Validator<WalletFundsRequestValidator>();
+            }).Validator<WalletFundsRequest>();
         return endpoint;
     }
 
