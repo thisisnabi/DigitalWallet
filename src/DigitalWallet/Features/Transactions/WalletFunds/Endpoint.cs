@@ -1,21 +1,23 @@
-﻿namespace DigitalWallet.Features.Transactions.WalletFunds;
+﻿using Carter;
 
-public static class Endpoint
+namespace DigitalWallet.Features.Transactions.WalletFunds;
+
+public class Endpoint : ICarterModule
 {
-
-    public static IEndpointRouteBuilder AddWalletFundsEndPoint(this IEndpointRouteBuilder endpoint)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        endpoint.MapPost("/funds",
-            async ([FromBody]WalletFundsRequest request, TransactionService _service, CancellationToken cancellationToken) =>
+        app
+            .MapGroup(FeatureManager.Prefix)
+            .WithTags(FeatureManager.EndpointTagName)
+            .MapPost("/funds",
+            async ([FromBody]WalletFundsRequest request, TransactionService service, CancellationToken cancellationToken) =>
             {
                 var swId = WalletId.Create(request.SourceWalletId);
                 var dwId = WalletId.Create(request.DestinationWalletId);
 
-                await _service.WalletFundsAsync(swId, dwId, request.Amount, request.Description, cancellationToken);
+                await service.WalletFundsAsync(swId, dwId, request.Amount, request.Description, cancellationToken);
 
                 return Results.Ok("Funds transferred successfully!");
             }).Validator<WalletFundsRequest>();
-        return endpoint;
     }
-
 }

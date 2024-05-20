@@ -1,26 +1,30 @@
-﻿namespace DigitalWallet.Features.MultiCurrency.GetAll;
+﻿using Carter;
 
-public static class Endpoint
+namespace DigitalWallet.Features.MultiCurrency.GetAll;
+
+public  class Endpoint : ICarterModule 
 {
-    public static IEndpointRouteBuilder AddGetAllEndpoint(this IEndpointRouteBuilder endpoint)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        endpoint.MapGet("/",
-            async (WalletDbContextReadOnly _dbContext, CancellationToken cancellationToken) =>
+        app
+            .MapGroup(FeatureManager.Prefix)
+            .WithTags(FeatureManager.EndpointTagName)
+            .MapGet("/",
+            async (WalletDbContextReadOnly dbContext, CancellationToken cancellationToken) =>
             {
-                var currencies = await _dbContext.GetCurrencies()
-                                                   .OrderByDescending(x => x.Name)
-                                                   .Select(x => new
-                                                   {
-                                                       Id = x.Id.ToString(),
-                                                       x.Name,
-                                                       x.Code,
-                                                       x.Ratio
-                                                   })
-                                                   .ToListAsync(cancellationToken);
+                var currencies = await dbContext.GetCurrencies()
+                    .OrderByDescending(x => x.Name)
+                    .Select(x => new
+                    {
+                        Id = x.Id.ToString(),
+                        x.Name,
+                        x.Code,
+                        x.Ratio
+                    })
+                    .ToListAsync(cancellationToken);
 
                 return Results.Ok(currencies);
             });
 
-        return endpoint;
     }
 }

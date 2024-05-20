@@ -1,11 +1,15 @@
-﻿namespace DigitalWallet.Features.UserWallet.ChangeTitle;
+﻿using Carter;
 
-public static class Endpoint
+namespace DigitalWallet.Features.UserWallet.ChangeTitle;
+
+public class Endpoint : ICarterModule
 {
-
-    public static IEndpointRouteBuilder AddChangeTitleEndpoint(this IEndpointRouteBuilder endpoint)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        endpoint.MapPatch("/{wallet_id:guid:required}",
+        app
+            .MapGroup(FeatureManager.Prefix)
+            .WithTags(FeatureManager.EndpointTagName)
+            .MapPatch("/{wallet_id:guid:required}",
             async ([FromBody] ChangeTitleRequest request, [FromRoute(Name = "wallet_id")] Guid Id, WalletService _service, CancellationToken cancellationToken) =>
             {
                 var walletId = WalletId.Create(Id);
@@ -14,7 +18,5 @@ public static class Endpoint
                 return Results.Ok("Wallet title changed successfully!");
             }).Validator<ChangeTitleRequest>();
 
-        return endpoint;
     }
-
 }
