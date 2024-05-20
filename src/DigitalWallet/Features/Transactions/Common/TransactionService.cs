@@ -27,6 +27,7 @@ public class TransactionService(
 
             var transaction = new Transaction
             {
+                Id = TransactionId.CreateUniqueId(),
                 WalletId = walletId,
                 Amount = amount,
                 Kind = TransactionKind.Incremental,
