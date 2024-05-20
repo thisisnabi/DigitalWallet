@@ -68,6 +68,7 @@ public class TransactionService(
 
             var transaction = new Transaction
             {
+                Id = TransactionId.CreateUniqueId(),
                 WalletId = walletId,
                 Amount = amount,
                 Kind = TransactionKind.Decremental,
@@ -118,6 +119,7 @@ public class TransactionService(
 
             var transactionIncrement = new Transaction
             {
+                Id = TransactionId.CreateUniqueId(),
                 WalletId = destinationWalletId,
                 Amount = destinationAmount,
                 Kind = TransactionKind.Incremental,
@@ -128,6 +130,7 @@ public class TransactionService(
 
             var transactionDecrement = new Transaction
             {
+                Id = TransactionId.CreateUniqueId(),
                 WalletId = sourceWalletId,
                 Amount = amount,
                 Kind = TransactionKind.Decremental,
