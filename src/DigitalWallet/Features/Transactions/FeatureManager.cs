@@ -1,15 +1,17 @@
-﻿namespace DigitalWallet.Features.Transactions;
+﻿using ServiceCollector.Abstractions;
 
-public static class FeatureManager
+namespace DigitalWallet.Features.Transactions;
+
+public abstract class FeatureManager
 {
     public const string EndpointTagName = "Transaction";
     public const string Prefix = "/transactions";
-
-
-    public static IServiceCollection ConfigureTransactionFeature(this IServiceCollection services)
+    
+    public class ServiceManager : IServiceDiscovery
     {
-        services.AddScoped<TransactionService>();
-
-        return services;
+        public void AddServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<TransactionService>();
+        }
     }
 }
