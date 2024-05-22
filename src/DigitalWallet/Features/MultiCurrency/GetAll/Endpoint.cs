@@ -12,19 +12,25 @@ public  class Endpoint : ICarterModule
             .MapGet("/",
             async (WalletDbContextReadOnly dbContext, CancellationToken cancellationToken) =>
             {
-                var currencies = await dbContext.GetCurrencies()
-                    .OrderByDescending(x => x.Name)
-                    .Select(x => new
-                    {
-                        Id = x.Id.ToString(),
-                        x.Name,
-                        x.Code,
-                        x.Ratio
-                    })
-                    .ToListAsync(cancellationToken);
+                var currencies = await GetCurrencies(dbContext, cancellationToken);
 
                 return Results.Ok(currencies);
             });
 
+    }
+
+    public static async Task<List<GetCurrenciesDto>> GetCurrencies(WalletDbContextReadOnly dbContext, CancellationToken cancellationToken)
+    {
+        var currencies = await dbContext.GetCurrencies()
+            .OrderByDescending(x => x.Name)
+            .Select(x => new GetCurrenciesDto
+            {
+                Id = x.Id.ToString(),
+                Name = x.Name,
+                Code = x.Code,
+                Ratio = x.Ratio
+            })
+            .ToListAsync(cancellationToken);
+        return currencies;
     }
 }
