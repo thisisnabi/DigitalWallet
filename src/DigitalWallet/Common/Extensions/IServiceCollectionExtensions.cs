@@ -2,7 +2,7 @@
 
 namespace DigitalWallet.Common.Extensions;
 
-public static class IServiceCollectionExtensions
+internal static class IServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureDbContexts(this IServiceCollection services, IConfiguration configuration)
     {

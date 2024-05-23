@@ -1,20 +1,18 @@
-﻿namespace DigitalWallet.Common.Filters;
+﻿using FluentValidation.Results;
 
-public class EndpointValidatorFilter<T> : IEndpointFilter
+namespace DigitalWallet.Common.Filters;
+
+internal class EndpointValidatorFilter<T>(IValidator<T> validator) : IEndpointFilter
 {
-    private readonly IValidator<T> _validator;
-    public EndpointValidatorFilter(IValidator<T> validator)
-    {
-        _validator = validator;
-    }
-
+    private IValidator<T> Validator => validator;
+  
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         T? inputData = context.GetArgument<T>(0);
 
         if (inputData is not null)
         {
-            var validationResult = await _validator.ValidateAsync(inputData);
+            ValidationResult validationResult = await Validator.ValidateAsync(inputData);
             if (!validationResult.IsValid)
             {
                 return Results.ValidationProblem(validationResult.ToDictionary(),
@@ -26,7 +24,7 @@ public class EndpointValidatorFilter<T> : IEndpointFilter
     }
 }
 
-public static class ValidatorExtensions
+internal static class ValidatorExtensions
 {
     public static RouteHandlerBuilder Validator<T>(this RouteHandlerBuilder handlerBuilder)
         where T : class
