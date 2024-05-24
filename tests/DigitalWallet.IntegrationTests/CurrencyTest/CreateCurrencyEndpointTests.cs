@@ -25,16 +25,10 @@ public class CreateCurrencyEndpointTests : IClassFixture<DigitalWalletApiFactory
         // Arrange
         CreateCurrencyRequest request = new("rial", "rial", 0);
 
-
         // Act
         HttpResponseMessage httpResponseMessage = await _httpClient.PostAsJsonAsync($"{FeatureManager.Prefix}/", request);
 
-
         // Assert
-
         httpResponseMessage.StatusCode.Should().Be(System.Net.HttpStatusCode.UnprocessableEntity);
-
     }
-
-
 }

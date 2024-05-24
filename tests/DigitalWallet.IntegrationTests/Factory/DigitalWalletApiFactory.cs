@@ -17,7 +17,7 @@ public class DigitalWalletApiFactory : WebApplicationFactory<IAssemblyMarker>, I
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        // Clear default db context 
+        
         builder.ConfigureServices(services =>
         {
             ServiceDescriptor? descriptor = services.SingleOrDefault(
@@ -25,6 +25,7 @@ public class DigitalWalletApiFactory : WebApplicationFactory<IAssemblyMarker>, I
 
             if(descriptor is not null)
             {
+                // Clear default db context 
                 services.Remove(descriptor);
             }
 
@@ -32,7 +33,6 @@ public class DigitalWalletApiFactory : WebApplicationFactory<IAssemblyMarker>, I
             {
                 options.UseInMemoryDatabase("WalletDbContextTest");
             });
-
 
             var serviceProvider = services.BuildServiceProvider();
 
@@ -48,7 +48,6 @@ public class DigitalWalletApiFactory : WebApplicationFactory<IAssemblyMarker>, I
                     {
                         testDbContext.Database.Migrate();
                     }
-                    //db.Database.Migrate();
                 }
                 catch (Exception ex)
                 {
@@ -56,8 +55,6 @@ public class DigitalWalletApiFactory : WebApplicationFactory<IAssemblyMarker>, I
                 }
             }
         });
-
-        
     }
 
     Task IAsyncLifetime.DisposeAsync()
