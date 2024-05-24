@@ -1,5 +1,6 @@
 using Carter;
 using DigitalWallet.Common.Extensions;
+using ServiceCollector.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +9,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureDbContexts(builder.Configuration);
 builder.Services.ConfigureValidator();
- 
-builder.Services.ConfigureMultiCurrencyFeature();
-builder.Services.ConfigureWalletFeature();
-builder.Services.ConfigureTransactionFeature();
 builder.Services.AddCarter();
+builder.Services.AddServiceDiscovery();
 
 var app = builder.Build();
 
