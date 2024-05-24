@@ -19,11 +19,11 @@ public  class Endpoint : ICarterModule
 
     }
 
-    public static async Task<List<GetCurrenciesDto>> GetCurrencies(WalletDbContextReadOnly dbContext, CancellationToken cancellationToken)
+    public static async Task<List<GetCurrencyResponse>> GetCurrencies(WalletDbContextReadOnly dbContext, CancellationToken cancellationToken)
     {
         var currencies = await dbContext.GetCurrencies()
             .OrderByDescending(x => x.Name)
-            .Select(x => new GetCurrenciesDto
+            .Select(x => new GetCurrencyResponse
             {
                 Id = x.Id.ToString(),
                 Name = x.Name,

@@ -1,6 +1,6 @@
 ﻿namespace DigitalWallet.Features.MultiCurrency.GetAll;
 
-public class GetCurrenciesDto
+public class GetCurrencyResponse
 {
     public string Id{get;set;} 
     public string Name{get;set;}

@@ -12,7 +12,7 @@ public class GetAllCurrencies
     public async Task GetAllCurrencies_ThereIsCurrencyInDatabase_ReturnListOfCurrencies()
     {
         // Arrange
-        var expectedCurrencies = new GetCurrenciesDto()
+        var expectedCurrencies = new GetCurrencyResponse()
         {
             Code = "rial",
             Name = "rial",
