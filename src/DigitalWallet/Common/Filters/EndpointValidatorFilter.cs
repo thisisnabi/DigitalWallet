@@ -23,13 +23,3 @@ internal class EndpointValidatorFilter<T>(IValidator<T> validator) : IEndpointFi
         return await next.Invoke(context);
     }
 }
-
-internal static class ValidatorExtensions
-{
-    public static RouteHandlerBuilder Validator<T>(this RouteHandlerBuilder handlerBuilder)
-        where T : class
-    {
-        handlerBuilder.AddEndpointFilter<EndpointValidatorFilter<T>>();
-        return handlerBuilder;
-    }
-}

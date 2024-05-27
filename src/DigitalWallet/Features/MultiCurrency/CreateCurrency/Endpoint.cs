@@ -1,4 +1,5 @@
 ﻿using Carter;
+using DigitalWallet.Common.Extensions;
 
 namespace DigitalWallet.Features.MultiCurrency.CreateCurrency;
 
