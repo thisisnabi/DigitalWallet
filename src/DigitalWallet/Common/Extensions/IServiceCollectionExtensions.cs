@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace DigitalWallet.Common.Extensions;
+﻿namespace DigitalWallet.Common.Extensions;
 
 internal static class IServiceCollectionExtensions
 {

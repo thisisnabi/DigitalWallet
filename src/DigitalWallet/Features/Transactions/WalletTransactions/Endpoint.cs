@@ -1,8 +1,4 @@
-﻿using Azure.Core;
-using DigitalWallet.Common.Persistence;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading;
-using Carter;
+﻿using Carter;
 
 namespace DigitalWallet.Features.Transactions.WalletTransactions;
 
