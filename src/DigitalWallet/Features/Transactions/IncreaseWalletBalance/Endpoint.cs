@@ -1,8 +1,9 @@
-﻿ using Carter;
+﻿using Carter;
+using DigitalWallet.Common.Extensions;
 
- namespace DigitalWallet.Features.Transactions.IncreaseWalletBalance;
+namespace DigitalWallet.Features.Transactions.IncreaseWalletBalance;
 
- public class Endpoint : ICarterModule
+public class Endpoint : ICarterModule
  {
      public void AddRoutes(IEndpointRouteBuilder app)
      {
