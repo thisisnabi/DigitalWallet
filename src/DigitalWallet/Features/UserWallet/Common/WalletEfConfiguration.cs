@@ -32,7 +32,8 @@ public class WalletEfConfiguration : IEntityTypeConfiguration<Wallet>
 
         builder.Property(x => x.Balance)
                .IsRequired()
-               .HasColumnType(WalletDbContextSchema.DefaultDecimalColumnType);
+               .HasColumnType(WalletDbContextSchema.DefaultDecimalColumnType)
+               .IsConcurrencyToken();
 
         builder.Property(x => x.CreatedOnUtc)
                .IsRequired(true);
